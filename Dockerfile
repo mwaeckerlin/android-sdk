@@ -12,7 +12,12 @@ RUN wget -q $(wget -q -O- 'https://developer.android.com/sdk' | \
 RUN tar xzf /tmp/android-sdk*linux*.tgz
 RUN mv android-sdk-linux /android
 RUN rm /tmp/android-sdk*linux*.tgz
-RUN ( sleep 5 && while [ 1 ]; do sleep 1; echo "y"; done ) | ${ANDROID_HOME}/tools/android update sdk -u
+# Buildservice on https://hub.docker.com/ →
+# ApplyLayer exit status 1 stdout: stderr:
+# write /android/system-images/android-23/google_apis/armeabi-v7a/system.img:
+# no space left on device
+# → so, only update on container creation :p
+#RUN ( sleep 5 && while [ 1 ]; do sleep 1; echo "y"; done ) | ${ANDROID_HOME}/tools/android update sdk -u
 
 WORKDIR /android
 
