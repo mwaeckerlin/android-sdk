@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM mwaeckerlin/ubuntu-base
 MAINTAINER mwaeckerlin
 
 ENV ANDROID_HOME /android
@@ -20,6 +20,11 @@ RUN rm /tmp/android-sdk*linux*.tgz
 #RUN ( sleep 5 && while [ 1 ]; do sleep 1; echo "y"; done ) | ${ANDROID_HOME}/tools/android update sdk -u
 
 WORKDIR /android
+
+# accept the license
+RUN mkdir licenses
+RUN echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > licenses/android-sdk-license"
+RUN echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > licenses
 
 CMD ( sleep 5 && while [ 1 ]; do sleep 1; echo "y"; done ) | \
 	${ANDROID_HOME}/tools/android update sdk -u && \
